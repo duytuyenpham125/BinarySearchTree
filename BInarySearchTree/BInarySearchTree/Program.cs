@@ -32,6 +32,14 @@ namespace BInarySearchTree
             Console.Write("\n\nDuyet Thu tu sau:\t");
             tree.PostOrder(tree.root);
 
+            
+            if (tree.IsStrictBinaryTree(tree.root))
+                Console.WriteLine("\nCay la cay nhi phan chat (Strict Binary Tree).");
+            else
+                Console.WriteLine("\nCay KHONG phai cay nhi phan chat.");
+
+
+            
             Console.Write("\nChieu cao cay:{0}", tree.CalTreeHeight(tree.root));
             Console.Write("\nGia tri nut max:{0}", tree.FindMax(tree.root));
             Console.Write("\nGia tri nut min:{0}", tree.FindMin(tree.root));
@@ -65,3 +73,4 @@ namespace BInarySearchTree
         }
     }
 }
+
