@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,28 +33,88 @@ namespace BInarySearchTree
         public void PreOrder(Node aRoot)
         {
             if (aRoot != null)
-            {
+            {/*
                 Process(aRoot);
                 PreOrder(aRoot.left);
                 PreOrder(aRoot.right);
+                */
+                Stack<Node> stack = new Stack<Node>();
+                stack.Push(aRoot);
+
+                while (stack.Count > 0)
+                {
+                    Node node = stack.Pop();
+                    Console.Write(node.key + " ");
+
+                    // Push right first so left is processed first
+                    if (node.right != null)
+                        stack.Push(node.right);
+
+                    if (node.left != null)
+                        stack.Push(node.left);
+                }
             }
         }
         public void InOrder(Node aRoot)
-        {
+        {/*
             if (aRoot != null)
             {
                 InOrder(aRoot.left);
                 Process(aRoot);
                 InOrder(aRoot.right);
             }
+            */
+            Stack<Node> stack = new Stack<Node>();
+            Node current = aRoot;
+
+            while (current != null || stack.Count > 0)
+            {
+                // Di chuyển tới trái nhất có thể
+                while (current != null)
+                {
+                    stack.Push(current);
+                    current = current.left;
+                }
+
+                // Xử lý node
+                current = stack.Pop();
+                Console.Write(current.key + " ");
+
+                // Di chuyển sang phải
+                current = current.right;
+            }
         }
         public void PostOrder(Node aRoot)
         {
             if (aRoot != null)
             {
-                PostOrder(aRoot.left);
+                /*PostOrder(aRoot.left);
                 PostOrder(aRoot.right);
                 Process(aRoot);
+                */
+                Stack<Node> stack1 = new Stack<Node>();
+                Stack<Node> stack2 = new Stack<Node>();
+
+                stack1.Push(root);
+
+                while (stack1.Count > 0)
+                {
+                    Node node = stack1.Pop();
+                    stack2.Push(node);
+
+                    // Đẩy left và right vào stack1
+                    if (node.left != null)
+                        stack1.Push(node.left);
+                    if (node.right != null)
+                        stack1.Push(node.right);
+                }
+
+                // Xử lý từ stack2 để có Postorder
+                while (stack2.Count > 0)
+                {
+                    Node node = stack2.Pop();
+                    Console.Write(node.key + " ");
+                }
             }
         }
         public void CountAndSumAllNodes(Node aRoot,ref int count,ref int sum)
@@ -159,7 +219,7 @@ namespace BInarySearchTree
             }
             if (subsNode != removeNode.right)
             {
-                subsParent.left = removeNode.right;
+                subsParent.left = subsNode.right;
                 subsNode.right = removeNode.right;
             }
             return subsNode;
