@@ -117,6 +117,22 @@ namespace BInarySearchTree
                 }
             }
         }
+         public bool IsStrictBinaryTree(Node aRoot)
+        {
+            if (aRoot == null)
+                return true;  // Cây rỗng coi như là cây chặt
+
+            // Nếu node là lá  hợp lệ
+            if (aRoot.left == null && aRoot.right == null)
+                return true;
+
+            // Nếu node có đúng 1 con KHÔNG phải cây nhị phân chặt
+            if (aRoot.left == null || aRoot.right == null)
+                return false;
+
+            // Nếu node có 2 con kiểm tra tiếp bên trái và phải
+            return IsStrictBinaryTree(aRoot.left) && IsStrictBinaryTree(aRoot.right);
+        }
         public void CountAndSumAllNodes(Node aRoot,ref int count,ref int sum)
         {
             if (aRoot != null)
@@ -290,3 +306,4 @@ namespace BInarySearchTree
         }
     }
 }
+
